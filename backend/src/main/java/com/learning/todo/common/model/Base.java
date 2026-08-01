@@ -26,4 +26,7 @@ public abstract class Base {
 
     @LastModifiedDate
     private LocalDateTime updatedAt;
+
+    @Version
+    private String version;
 }

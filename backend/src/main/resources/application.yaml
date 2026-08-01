@@ -3,9 +3,10 @@ spring:
     name: todo-api
 
   datasource:
-    url: jdbc:postgresql://localhost:5432/todo_db
-    username: todoDB
-    password: todoDB@123
+    url: jdbc:postgresql://localhost:5433/todo_db
+    username: todo_dev
+    password: todoDev@123
+    driver-class-name: org.postgresql.Driver
 
   jpa:
     open-in-view: false
@@ -16,6 +17,8 @@ spring:
     properties:
       hibernate:
         format_sql: true
+    database: postgresql
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
 
   flyway:
     enabled: true

@@ -1,6 +1,5 @@
 package com.learning.todo.common.security;
 
-import com.learning.todo.common.exception.ResourceNotFoundException;
 import com.learning.todo.user.model.User;
 import com.learning.todo.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;

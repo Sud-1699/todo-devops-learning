@@ -23,6 +23,7 @@ public class SecurityConfig {
 
     private final JwtFilter jwtFilter;
     private final AuthenticationProvider authenticationProvider;
+    private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
 
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity http) {
@@ -46,7 +47,10 @@ public class SecurityConfig {
                                 ).permitAll()
                                 .anyRequest()
                                 .authenticated()
-                ).addFilterBefore(
+                )
+                .exceptionHandling(ex ->
+                        ex.authenticationEntryPoint(jwtAuthenticationEntryPoint))
+                .addFilterBefore(
                         jwtFilter,
                         UsernamePasswordAuthenticationFilter.class
                 );
