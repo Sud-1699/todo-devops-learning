@@ -21,6 +21,11 @@ spring:
     enabled: true
     locations: classpath:db/migration
 
+  security:
+    jwt:
+      secret: 4f6a6d784b50733356367839244226452948404d635166546a576e5a7234753778
+      expiration: 86400000
+
 server:
   port: 8080
 
@@ -29,8 +34,3 @@ management:
     web:
       exposure:
         include: health,info
-
-security:
-  jwt:
-    secret: YOUR_256_BIT_SECRET_KEY # TODO: will do later
-    expiration: 86400000

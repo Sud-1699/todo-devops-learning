@@ -2,9 +2,12 @@ CREATE TABLE roles
 (
     id UUID PRIMARY KEY,
 
-    name VARCHAR(50) UNIQUE NOT NULL,
+    name VARCHAR(30) NOT NULL UNIQUE,
 
-    created_at TIMESTAMP NOT NULL,
+    created_at TIMESTAMPTZ NOT NULL,
 
-    updated_at TIMESTAMP
+    updated_at TIMESTAMPTZ
 );
+
+CREATE INDEX idx_roles_name
+ON roles(name);

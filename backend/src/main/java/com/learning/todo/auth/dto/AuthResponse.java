@@ -1,4 +1,11 @@
 package com.learning.todo.auth.dto;
 
-public class AuthResponse {
+import lombok.Builder;
+
+@Builder
+public record AuthResponse(
+        String accessToken,
+        String tokenType,
+        Long expiresIn
+) {
 }

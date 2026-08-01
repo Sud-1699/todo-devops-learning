@@ -1,4 +1,14 @@
 package com.learning.todo.common.response;
 
-public class ApiResponse {
+import lombok.Builder;
+
+import java.time.LocalDateTime;
+
+@Builder
+public record ApiResponse<T>(
+        boolean success,
+        String message,
+        T data,
+        LocalDateTime timestamp
+) {
 }
