@@ -1,4 +1,4 @@
-CREATE TABLE notes
+CREATE TABLE IF NOT EXISTS notes
 (
     id UUID PRIMARY KEY,
 
@@ -23,11 +23,11 @@ CREATE TABLE notes
         CHECK (status IN ('ACTIVE', 'ARCHIVED'))
 );
 
-CREATE INDEX idx_notes_user
+CREATE INDEX IF NOT EXISTS idx_notes_user
 ON notes(user_id);
 
-CREATE INDEX idx_notes_status
+CREATE INDEX IF NOT EXISTS idx_notes_status
 ON notes(status);
 
-CREATE INDEX idx_notes_created_at
+CREATE INDEX IF NOT EXISTS idx_notes_created_at
 ON notes(created_at);

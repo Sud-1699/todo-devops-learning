@@ -1,5 +1,6 @@
 package com.learning.todo.role.repository;
 
+import com.learning.todo.role.enums.RoleType;
 import com.learning.todo.role.model.Role;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
@@ -10,5 +11,5 @@ import java.util.UUID;
 @Repository
 public interface RoleRepository extends JpaRepository<Role, UUID> {
 
-    Optional<Role> findByName(String name);
+    Optional<Role> findByName(RoleType name);
 }

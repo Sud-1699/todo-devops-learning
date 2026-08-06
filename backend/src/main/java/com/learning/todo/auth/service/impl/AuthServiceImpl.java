@@ -37,7 +37,7 @@ public class AuthServiceImpl implements AuthService {
             throw new IllegalArgumentException("Email already registered.");
         }
 
-        Role userRole = roleRepository.findByName(RoleType.ROLE_USER.toString())
+        Role userRole = roleRepository.findByName(RoleType.ROLE_USER)
                 .orElseThrow(() -> new IllegalStateException("ROLE_USER not found."));
 
         User user = User.builder()

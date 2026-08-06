@@ -1,4 +1,4 @@
-CREATE TABLE roles
+CREATE TABLE IF NOT EXISTS roles
 (
     id UUID PRIMARY KEY,
 
@@ -9,5 +9,5 @@ CREATE TABLE roles
     updated_at TIMESTAMPTZ
 );
 
-CREATE INDEX idx_roles_name
+CREATE INDEX IF NOT EXISTS idx_roles_name
 ON roles(name);

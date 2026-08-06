@@ -26,11 +26,11 @@ public class User extends Base {
     private String password;
 
     @Builder.Default
-    private Boolean enabled = true;
+    private boolean enabled = true;
 
     @Builder.Default
     @Column(nullable = false)
-    private Boolean accountLocked = false;
+    private boolean accountLocked = false;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "role_id")

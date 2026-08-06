@@ -18,7 +18,7 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 
 @RestController
-@RequestMapping("/v1/auth")
+@RequestMapping("/auth")
 @RequiredArgsConstructor
 public class AuthController {
     private final AuthService authService;

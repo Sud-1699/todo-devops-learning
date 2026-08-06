@@ -59,7 +59,7 @@ public class CustomUserDetails implements UserDetails {
 
     @Override
     public boolean isAccountNonLocked() {
-        return !Boolean.TRUE.equals(user.getAccountLocked());
+        return !user.isAccountLocked();
     }
 
     @Override
@@ -69,7 +69,7 @@ public class CustomUserDetails implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return Boolean.TRUE.equals(user.getEnabled());
+        return user.isEnabled();
     }
 
 }

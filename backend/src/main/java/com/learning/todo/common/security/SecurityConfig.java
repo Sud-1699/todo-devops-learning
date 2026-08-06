@@ -29,13 +29,11 @@ public class SecurityConfig {
     SecurityFilterChain securityFilterChain(HttpSecurity http) {
         http
                 .csrf(csrf -> csrf.disable())
-                .sessionManagement(session ->
-                        session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .authenticationProvider(authenticationProvider)
                 .authorizeHttpRequests(
                         auth -> auth
                                 .requestMatchers(
-                                        "/api/auth/**",
+                                        "/auth/**",
+                                        "/todo/**",
                                         "/actuator/health",
                                         "/v3/api-docs/**",
                                         "/swagger-ui/**",
@@ -48,12 +46,15 @@ public class SecurityConfig {
                                 .anyRequest()
                                 .authenticated()
                 )
-                .exceptionHandling(ex ->
-                        ex.authenticationEntryPoint(jwtAuthenticationEntryPoint))
+                .sessionManagement(session ->
+                        session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .authenticationProvider(authenticationProvider)
                 .addFilterBefore(
                         jwtFilter,
                         UsernamePasswordAuthenticationFilter.class
-                );
+                )
+                .exceptionHandling(ex ->
+                        ex.authenticationEntryPoint(jwtAuthenticationEntryPoint));
 
         return http.build();
     }
