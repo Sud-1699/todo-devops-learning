@@ -18,7 +18,7 @@ import java.util.Map;
 public class GlobalExceptionHandler {
 
     @ExceptionHandler(DuplicateUserException.class)
-    public ResponseEntity<ApiResponse<Object>> handlerDuplicateUser(
+    public ResponseEntity<ApiResponse<Object>> handleDuplicateUser(
             DuplicateUserException ex
     ) {
         return ResponseEntity.status(HttpStatus.CONFLICT)
@@ -30,7 +30,7 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(ResourceNotFoundException.class)
-    public ResponseEntity<ApiResponse<Object>> notFound(
+    public ResponseEntity<ApiResponse<Object>> handleNotFound(
             ResourceNotFoundException ex) {
 
         return ResponseEntity.status(HttpStatus.NOT_FOUND)
@@ -42,7 +42,7 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(BadCredentialsException.class)
-    public ResponseEntity<ApiResponse<Object>> badCredential(
+    public ResponseEntity<ApiResponse<Object>> handleBadCredential(
             BadCredentialsException ex) {
 
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
@@ -53,8 +53,20 @@ public class GlobalExceptionHandler {
                         .build());
     }
 
+    @ExceptionHandler(IllegalStateException.class)
+    public ResponseEntity<ApiResponse<Object>> handleIllegalState(
+            IllegalStateException ex) {
+
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                .body(ApiResponse.builder()
+                        .success(false)
+                        .message("User role not found")
+                        .timestamp(LocalDateTime.now(ZoneId.systemDefault()))
+                        .build());
+    }
+
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<ApiResponse<Object>> validation(
+    public ResponseEntity<ApiResponse<Object>> handleValidation(
             MethodArgumentNotValidException ex) {
 
         Map<String, String> errors = new LinkedHashMap<>();

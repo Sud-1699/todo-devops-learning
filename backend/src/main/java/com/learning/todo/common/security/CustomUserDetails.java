@@ -16,6 +16,16 @@ import java.util.UUID;
 public class CustomUserDetails implements UserDetails {
 
     private final User user;
+    private final Collection<? extends GrantedAuthority> authorities;
+
+    public CustomUserDetails(User user) {
+        this.user = user;
+        this.authorities = List.of(
+                new SimpleGrantedAuthority(
+                        user.getRole().getName().name()
+                )
+        );
+    }
 
     public UUID getUserId() {
         return user.getId();
@@ -31,12 +41,7 @@ public class CustomUserDetails implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-
-        return List.of(
-                new SimpleGrantedAuthority(
-                        user.getRole().getName().name()
-                )
-        );
+        return authorities;
     }
 
     @Override
@@ -71,5 +76,4 @@ public class CustomUserDetails implements UserDetails {
     public boolean isEnabled() {
         return user.isEnabled();
     }
-
 }

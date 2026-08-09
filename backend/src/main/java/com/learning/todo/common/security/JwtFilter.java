@@ -1,5 +1,6 @@
 package com.learning.todo.common.security;
 
+import io.jsonwebtoken.JwtException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -10,6 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
@@ -66,8 +68,17 @@ public class JwtFilter extends OncePerRequestFilter {
                     log.debug("Authenticated user '{}'", username);
                 }
             }
+        } catch (JwtException ex) {
+            log.warn("Invalid JWT token");
+            SecurityContextHolder.clearContext();
+        } catch (UsernameNotFoundException ex) {
+            log.warn("User associated with JWT was not found");
+            SecurityContextHolder.clearContext();
         } catch (Exception ex) {
-            log.warn("JWT Authentication failed: {}", ex.getMessage());
+            log.error(
+                    "Unexpected error while authenticating JWT",
+                    ex
+            );
             SecurityContextHolder.clearContext();
         }
 
