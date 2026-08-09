@@ -60,7 +60,7 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
                 .body(ApiResponse.builder()
                         .success(false)
-                        .message("User role not found")
+                        .message(ex.getMessage())
                         .timestamp(LocalDateTime.now(ZoneId.systemDefault()))
                         .build());
     }
