@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>com.learning</groupId>
 	<artifactId>backend</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.1.0</version>
 	<name/>
 	<description/>
 	<url/>
@@ -148,6 +148,7 @@
 						<path>
 							<groupId>org.projectlombok</groupId>
 							<artifactId>lombok-mapstruct-binding</artifactId>
+							<version>0.2.0</version>
 						</path>
 						<!-- 3. MapStruct comes last -->
 						<path>
