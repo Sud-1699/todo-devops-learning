@@ -26,14 +26,14 @@ spring:
     baseline-on-migrate: true
     baseline-version: 0
 
-  security:
-    jwt:
-      secret: ${JWT_SECRET}
-      expiration: ${JWT_EXPIRATION}
-
   devtools:
     restart:
       enabled:
+
+security:
+  jwt:
+    secret: ${AUTH_SECRET}
+    expiration: ${AUTH_EXPIRATION}
 
 server:
   port: ${SERVER_PORT}

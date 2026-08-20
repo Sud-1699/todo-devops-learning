@@ -1,6 +1,7 @@
 services:
+  ## Database service
   postgres:
-    container_name: postgres-sql-todo
+    container_name: todo-db
     image: postgres:16-alpine
     environment:
       POSTGRES_USER: ${DB_USERNAME}
@@ -8,7 +9,7 @@ services:
       PGDATA: /var/lib/postgresql/data
       POSTGRES_DB: ${DB_NAME}
     volumes:
-      - postgresv:/data/postgres
+      - todo-db-volumes:/data/postgres
     healthcheck:
       test:
         [
@@ -24,37 +25,48 @@ services:
       - todo-network
     restart: unless-stopped
 
+  ## Backend service
   backend:
     build:
       context: ./backend
       dockerfile: Dockerfile
 
     container_name: todo-backend
-
     environment:
       SPRING_PROFILES_ACTIVE: docker
 
-      DB_HOST: postgres-sql-todo
+      DB_HOST: todo-db
       DB_PORT: ${DB_PORT}
       DB_NAME: ${DB_NAME}
       DB_USERNAME: ${DB_USERNAME}
       DB_PASSWORD: ${DB_PASSWORD}
 
-      JWT_SECRET: ${JWT_SECRET}
-      JWT_EXPIRATION: ${JWT_EXPIRATION}
+      AUTH_SECRET: ${JWT_SECRET}
+      AUTH_EXPIRATION: ${JWT_EXPIRATION}
 
       SERVER_PORT: ${BACKEND_PORT}
 
       APPLICATION_NAME: ${APPLICATION_NAME}
       CONTEXT_PATH: ${CONTEXT_PATH}
-
     ports:
       - ${BACKEND_PORT}:9100
-
     depends_on:
       postgres:
         condition: service_healthy
+    networks:
+      - todo-network
 
+  ## Frontend service
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+
+    container_name: todo-frontend
+    ports:
+      - ${FRONTEND_PORT}:80
+    depends_on:
+      - backend
     networks:
       - todo-network
 
@@ -63,5 +75,5 @@ networks:
     driver: bridge
 
 volumes:
-  postgresv:
+  todo-db-volumes:
     driver: local
