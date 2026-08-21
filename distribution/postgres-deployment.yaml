@@ -18,10 +18,10 @@ spec:
         - name: postgres
           image: postgres:16-alpine
           ports:
-            - containerPort: 5433
+            - containerPort: 5432
           env:
             - name: POSTGRES_DB
-              value: todo_db
+              value: todos
             - name: POSTGRES_USER
               value: todo_dev
             - name: POSTGRES_PASSWORD
