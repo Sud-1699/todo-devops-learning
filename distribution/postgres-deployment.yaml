@@ -21,14 +21,24 @@ spec:
             - containerPort: 5432
           env:
             - name: POSTGRES_DB
-              value: todos
+              valueFrom:
+                configMapKeyRef:
+                  name: todo-config
+                  key: DB_NAME
             - name: POSTGRES_USER
-              value: todo_dev
+              valueFrom:
+                secretKeyRef:
+                  name: todo-secret
+                  key: DB_USERNAME
             - name: POSTGRES_PASSWORD
-              value: todoDev@123
+              valueFrom:
+                secretKeyRef:
+                  name: todo-secret
+                  key: DB_PASSWORD
           volumeMounts:
             - name: postgres-storage
               mountPath: /var/lib/postgresql/data
       volumes:
         - name: postgres-storage
-          emptyDir: {}
+          persistentVolumeClaim:
+            claimName: postgres-pvc

@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend
+  namespace: todo-app
+
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: backend
+  template:
+    metadata:
+      labels:
+        app: backend
+    spec:
+      containers:
+        - name: backend
+          image: todo-backend:0.1.0
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 9100
+          env:
+            - name: SPRING_PROFILES_ACTIVE
+              value: docker
+          envFrom:
+            - configMapRef:
+                name: todo-config
+            - secretRef:
+                name: todo-secret
+          readinessProbe:
+            httpGet:
+              path: /actuator/health
+              port: 9100
+            initialDelaySeconds: 30
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /actuator/health
+              port: 9100
+            initialDelaySeconds: 60
+            periodSeconds: 20
