@@ -1,0 +1,60 @@
+namespace: todo-app
+
+global:
+  imagePullPolicy: IfNotPresent
+
+backend:
+  replicaCount: 1
+  image:
+    repository: todo-backend
+    tag: "0.1.0"
+
+  service:
+    type: ClusterIP
+    port: 9100
+
+  containerPort: 9100
+
+  env:
+    springProfile: docker
+
+  resources: {}
+
+frontend:
+  replicaCount: 1
+  image:
+    repository: todo-frontend
+    tag: "0.1.0"
+
+  service:
+    type: ClusterIP
+    port: 80
+
+  containerPort: 80
+
+  resources: {}
+
+postgres:
+  image:
+    repository: postgres
+    tag: "16-alpine"
+
+  service:
+    type: ClusterIP
+    port: 5432
+
+  storage:
+    size: 2Gi
+
+  database:
+    name: todos
+
+  resources: {}
+
+jwt:
+  expiration: "86400000"
+
+ingress:
+  enabled: true
+  className: nginx
+  host: todo.local
